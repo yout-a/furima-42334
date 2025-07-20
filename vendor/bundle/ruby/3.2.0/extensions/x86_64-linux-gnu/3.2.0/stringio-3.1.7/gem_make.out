@@ -1,0 +1,19 @@
+current directory: /home/koba/projects/furima-42334/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.7/ext/stringio
+/usr/bin/ruby3.2 -I/usr/lib/ruby/vendor_ruby extconf.rb
+checking for rb_io_mode_t in ruby/io.h... no
+creating Makefile
+
+current directory: /home/koba/projects/furima-42334/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250720-427016-6iaq9d sitelibdir\=./.gem.20250720-427016-6iaq9d clean
+
+current directory: /home/koba/projects/furima-42334/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250720-427016-6iaq9d sitelibdir\=./.gem.20250720-427016-6iaq9d
+compiling stringio.c
+linking shared-object stringio.so
+
+current directory: /home/koba/projects/furima-42334/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250720-427016-6iaq9d sitelibdir\=./.gem.20250720-427016-6iaq9d install
+/usr/bin/install -c -m 0755 stringio.so ./.gem.20250720-427016-6iaq9d
+
+current directory: /home/koba/projects/furima-42334/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250720-427016-6iaq9d sitelibdir\=./.gem.20250720-427016-6iaq9d clean
