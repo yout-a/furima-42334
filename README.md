@@ -68,12 +68,12 @@
 | -------------- | --------   | ------------------------------------- |
 | id             | bigint     | PK, NOT NULL                          |
 | order          | references | NOT NULL, foreign_key: true, index    |
-| postal_code    | string     | NOT NULL, format: XXX-XXXX            |
+| postal_code    | string     | NOT NULL,                             |
 | prefecture     | references | NOT NULL, foreign_key: true, index    |
 | city           | string     | NOT NULL                              |
 | address        | string     | NOT NULL                              |
 | building       | string     |                                       |
-| phone_number   | string     | NOT NULL, format: 10–11 digit         |
+| phone_number   | string     | NOT NULL,                             |
 | created_at     | datetime   | NOT NULL                              |
 | updated_at     | datetime   | NOT NULL                              |
 
