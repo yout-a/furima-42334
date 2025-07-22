@@ -5,19 +5,17 @@
 
 ## Users テーブル
 
-| Column            | Type     | Options          |
-| ----------------- | -------- | ---------------- |
-| id                | bigint   | PK, NOT NULL     |
-| nickname          | string   | NOT NULL         |
-| email             | string   | NOT NULL, UNIQUE |
-| password          | string   | NOT NULL         |
-| last_name         | string   | NOT NULL         |
-| first_name        | string   | NOT NULL         |
-| last_name_kana    | string   | NOT NULL         |
-| first_name_kana   | string   | NOT NULL         |
-| birth_date        | date     | NOT NULL         |
-| created_at        | datetime | NOT NULL         |
-| updated_at        | datetime | NOT NULL         |
+| Column             | Type     | Options          |
+| ------------------ | -------- | ---------------- |
+| id                 | bigint   | PK, NOT NULL     |
+| nickname           | string   | NOT NULL         |
+| email              | string   | NOT NULL, UNIQUE |
+| encrypted_password | string   | NOT NULL         |
+| last_name          | string   | NOT NULL         |
+| first_name         | string   | NOT NULL         |
+| last_name_kana     | string   | NOT NULL         |
+| first_name_kana    | string   | NOT NULL         |
+| birth_date         | date     | NOT NULL         |
 
 ### Association
 
@@ -32,15 +30,12 @@
 | title                  | string     | NOT NULL                                          |
 | description            | text       | NOT NULL                                          |
 | price                  | integer    | NOT NULL,                                         |
-| status_id              | integer    | NOT NULL                                          |
 | category_id            | integer    | NOT NULL                                          |
 | condition_id           | integer    | NOT NULL                                          |
 | shipping_fee_bearer_id | integer    | NOT NULL                                          |
 | prefecture_id          | integer    | NOT NULL                                          |
 | shipping_day_id        | integer    | NOT NULL                                          |
 | user                   | references | NOT NULL, foreign_key: true, index                |
-| created_at             | datetime   | NOT NULL                                          |
-| updated_at             | datetime   | NOT NULL                                          |
 
 ### Association
 
@@ -69,13 +64,11 @@
 | id             | bigint     | PK, NOT NULL                          |
 | order          | references | NOT NULL, foreign_key: true, index    |
 | postal_code    | string     | NOT NULL,                             |
-| prefecture     | references | NOT NULL, foreign_key: true, index    |
+| prefecture_id  | integer    | NOT NULL                              |
 | city           | string     | NOT NULL                              |
 | address        | string     | NOT NULL                              |
 | building       | string     |                                       |
 | phone_number   | string     | NOT NULL,                             |
-| created_at     | datetime   | NOT NULL                              |
-| updated_at     | datetime   | NOT NULL                              |
 
 ### Association
 
