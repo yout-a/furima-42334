@@ -4,6 +4,9 @@ class User < ApplicationRecord
 
   # ニックネーム必須
   validates :nickname, presence: true
+  #passwordは必須、6文字以上
+  validates :password, presence: true, length: { minimum: 6 }
+
 
   # 氏名（漢字・ひらがな・カタカナ）
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥々ー]+\z/, message: "は全角（漢字・ひらがな・カタカナ）で入力してください" } do
