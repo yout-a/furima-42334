@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :basic_auth
 
-  def index
-    @items = Item.all
-  end
-
   private
 
   def basic_auth
