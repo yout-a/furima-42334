@@ -3,10 +3,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # ニックネーム必須
-  validates :nickname, presence: true
-  #passwordは必須、6文字以上
-  validates :password, presence: true, length: { minimum: 6 }
-
+    validates :nickname, presence: true
+  # パスワード：必須・6文字以上・半角英数字混合
+  VALID_PASSWORD_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/
+    validates :password,
+  presence: true,
+  length: { minimum: 6 },
+  format: { with: VALID_PASSWORD_REGEX, message: 'は半角英数字混合で入力してください' }
 
   # 氏名（漢字・ひらがな・カタカナ）
   with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥々ー]+\z/, message: "は全角（漢字・ひらがな・カタカナ）で入力してください" } do
