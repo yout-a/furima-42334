@@ -342,6 +342,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  i18n
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)

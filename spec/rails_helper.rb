@@ -32,7 +32,7 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
-
+require 'i18n'
 I18n.locale = "en"
 
 RSpec.configure do |config|
