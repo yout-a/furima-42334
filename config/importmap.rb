@@ -12,5 +12,5 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 # controllers: 以下をまとめてピン
 pin_all_from "app/javascript/controllers", under: "controllers"
 
-# rails/actioncable（必要に応じて）
+# rails/actioncable
 pin "@rails/actioncable/src", to: "@rails--actioncable--src.js" # @8.0.200
