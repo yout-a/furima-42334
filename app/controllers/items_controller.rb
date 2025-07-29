@@ -2,9 +2,11 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-  end
+  @items = Item.includes(:image_attachment).order(created_at: :desc)
+end
 
   def show
+    @item = Item.find(params[:id])
   end
 
   def new
@@ -13,7 +15,7 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    @item.user = current_user  # ログインユーザーと紐付け
+    @item.user = current_user 
 
     if @item.save
       redirect_to root_path, notice: '商品を出品しました'
