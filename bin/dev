@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Run both Rails server and importmap watcher
+# You can kill both by pressing Ctrl-C
+
+trap 'kill $(jobs -p)' EXIT
+
+bin/rails server &
+bin/importmap watch &
+wait
