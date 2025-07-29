@@ -50,6 +50,8 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_hash (3.3.1)
+      activesupport (>= 5.0.0)
     activejob (7.1.5.1)
       activesupport (= 7.1.5.1)
       globalid (>= 0.3.6)
@@ -278,11 +280,6 @@ GEM
     rubocop-ast (1.46.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
-    rubocop-rails (2.29.1)
-      activesupport (>= 4.2.0)
-      rack (>= 1.1)
-      rubocop (>= 1.52.0, < 2.0)
-      rubocop-ast (>= 1.31.1, < 2.0)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
     securerandom (0.4.1)
@@ -341,6 +338,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  active_hash
   bootsnap
   capybara
   debug
@@ -356,7 +354,6 @@ DEPENDENCIES
   rails (~> 7.1.0)
   rspec-rails
   rubocop (= 1.71.2)
-  rubocop-rails
   selenium-webdriver
   sprockets-rails
   stimulus-rails
