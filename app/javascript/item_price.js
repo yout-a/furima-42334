@@ -7,7 +7,7 @@ const price = () => {
 
   priceInput.addEventListener('input', () => {
     const inputValue = priceInput.value;
-
+      console.log(inputValue);
     if (!inputValue || isNaN(inputValue)) {
       addTaxDom.innerHTML = '';
       profitDom.innerHTML = '';
