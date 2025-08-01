@@ -14,3 +14,5 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 
 # rails/actioncable
 pin "@rails/actioncable/src", to: "@rails--actioncable--src.js" # @8.0.200
+
+pin "item_price", to: "item_price.js"
