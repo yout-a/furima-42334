@@ -6,8 +6,8 @@ const price = () => {
   if (!priceInput) return;
 
   priceInput.addEventListener('input', () => {
-    const inputValue = priceInput.value;
-      console.log(inputValue);
+    const inputValue = priceInput.value; 
+
     if (!inputValue || isNaN(inputValue)) {
       addTaxDom.innerHTML = '';
       profitDom.innerHTML = '';
@@ -25,4 +25,5 @@ const price = () => {
 
 window.addEventListener('turbo:load', price);
 window.addEventListener('turbo:render', price);
+
 
