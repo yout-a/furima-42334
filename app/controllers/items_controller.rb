@@ -27,13 +27,24 @@ class ItemsController < ApplicationController
   def edit
   end
 
-  def update
-    if @item.update(item_params)
-      redirect_to item_path(@item)
-    else
-      render :edit, status: :unprocessable_entity
+    def update
+      if @item.update(item_params)
+        redirect_to item_path(@item)
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
-  end
+
+    def destroy
+        @item = Item.find(params[:id])
+        if @item.user == current_user
+          @item.destroy
+          redirect_to root_path, notice: '商品を削除しました'
+        else
+          redirect_to root_path, alert: '削除する権限がありません'
+        end
+    end
+
 
   private
 
