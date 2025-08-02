@@ -9,9 +9,9 @@ class ItemsController < ApplicationController
     @items = Item.includes(:user).order(created_at: :desc)
   end
 
-    def new
-      @item = Item.new
-    end
+  def new
+    @item = Item.new
+  end
 
   def create
     @item = Item.new(item_params)
@@ -27,24 +27,23 @@ class ItemsController < ApplicationController
   def edit
   end
 
-    def update
-      if @item.update(item_params)
-        redirect_to item_path(@item)
-      else
-        render :edit, status: :unprocessable_entity
-      end
+  def update
+    if @item.update(item_params)
+      redirect_to item_path(@item)
+    else
+      render :edit, status: :unprocessable_entity
     end
+  end
 
-    def destroy
-        @item = Item.find(params[:id])
-        if @item.user == current_user
-          @item.destroy
-          redirect_to root_path, notice: '商品を削除しました'
-        else
-          redirect_to root_path, alert: '削除する権限がありません'
-        end
+  def destroy
+    @item = Item.find(params[:id])
+    if @item.user == current_user
+      @item.destroy
+      redirect_to root_path, notice: '商品を削除しました'
+    else
+      redirect_to root_path, alert: '削除する権限がありません'
     end
-
+  end
 
   private
 
