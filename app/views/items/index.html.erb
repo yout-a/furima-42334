@@ -113,31 +113,36 @@
   </div>
 
   <div class='item-contents'>
-    <h2 class='title'>ピックアップカテゴリー</h2>
-    <div class="subtitle" >
-      新規投稿商品
-    </div>
-    <ul class='item-lists'>
+  <h2 class='title'>ピックアップカテゴリー</h2>
+  <div class="subtitle">
+    新規投稿商品
+  </div>
 
-      <% if @items.present? %>
+  <ul class='item-lists'>
+    <% if @items.present? %>
       <% @items.each do |item| %>
         <li class='list'>
           <%= link_to item_path(item) do %>
             <div class='item-img-content'>
-              <%= image_tag item.image, class: "item-img" %>
+              <%= image_tag item.image, class: "item-img" if item.image.attached? %>
 
-          <% if item.order.present? %>
-            <div class="sold-out">Sold Out!!</div>
-          <% end %>
-
-        </div>
+              <%# 売却済みなら Sold Out 表示（item.order など判定方法は要確認） %>
+              <%# if item.sold_out? rescue false %>
+                <%# <div class='sold-out'>
+                  <span>Sold Out!!</span>
+                </div> %>
+              <%# end %>
+            </div>
 
             <div class='item-info'>
               <h3 class='item-name'><%= item.title %></h3>
               <div class='item-price'>
-                <span><%= item.price %>円<br><%= item.shipping_fee_bearer.name %></span>
+                <span>
+                  <%= number_to_currency(item.price, unit: "¥", precision: 0) %><br>
+                  <%= item.shipping_fee_bearer.name %>
+                </span>
                 <div class='star-btn'>
-                  <%= image_tag "star.png", class:"star-icon" %>
+                  <%= image_tag "star.png", class: "star-icon" %>
                   <span class='star-count'>0</span>
                 </div>
               </div>
@@ -147,25 +152,26 @@
       <% end %>
 
     <% else %>
+
       <li class='list'>
-        <%= link_to '#' do %>
-          <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
-          <div class='item-info'>
-            <h3 class='item-name'>商品を出品してね！</h3>
-            <div class='item-price'>
-              <span>99999999円<br>(税込み)</span>
-              <div class='star-btn'>
-                <%= image_tag "star.png", class:"star-icon" %>
-                <span class='star-count'>0</span>
-              </div>
+        <%= link_to "#" do %>
+        <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
+        <div class='item-info'>
+          <h3 class='item-name'>
+            商品を出品してね！
+          </h3>
+          <div class='item-price'>
+            <span>99999999円<br>(税込み)</span>
+            <div class='star-btn'>
+              <%= image_tag "star.png", class:"star-icon" %>
+              <span class='star-count'>0</span>
             </div>
           </div>
         <% end %>
       </li>
     <% end %>
-    
-  </ul>
-</div>
+    </ul>
+  </div>
 
 
 </div>

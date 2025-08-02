@@ -7,12 +7,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
-
   end
-
-    # def show
-    #   @item = Item.find(params[:id])
-    # end
 
     def new
       @item = Item.new
@@ -23,13 +18,32 @@ class ItemsController < ApplicationController
     @item.user = current_user
 
     if @item.save
-      redirect_to root_path, notice: '商品を出品しました'
+      redirect_to root_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @item.update(item_params)
+      redirect_to item_path(@item)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  def move_to_index
+    redirect_to root_path if current_user != @item.user
+  end
 
   def item_params
     params.require(:item).permit(
