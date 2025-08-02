@@ -124,7 +124,6 @@
         <li class='list'>
           <%= link_to item_path(item) do %>
             <div class='item-img-content'>
-              <%# 画像があれば表示 %>
               <%= image_tag item.image, class: "item-img" if item.image.attached? %>
 
               <%# 売却済みなら Sold Out 表示（item.order など判定方法は要確認） %>
