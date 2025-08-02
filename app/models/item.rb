@@ -4,7 +4,6 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one :order
 
-
   belongs_to :category
   belongs_to :condition
   belongs_to :shipping_fee_bearer
