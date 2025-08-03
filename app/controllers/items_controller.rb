@@ -1,17 +1,17 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
   end
 
-    def new
-      @item = Item.new
-    end
+  def new
+    @item = Item.new
+  end
 
   def create
     @item = Item.new(item_params)
@@ -32,6 +32,15 @@ class ItemsController < ApplicationController
       redirect_to item_path(@item)
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @item.user == current_user
+      @item.destroy
+      redirect_to root_path, notice: '商品を削除しました'
+    else
+      redirect_to root_path, alert: '削除する権限がありません'
     end
   end
 
