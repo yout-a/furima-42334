@@ -6,6 +6,8 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require "payjp"
+
 module Furima42334
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
