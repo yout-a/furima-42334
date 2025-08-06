@@ -9,7 +9,6 @@
     <div class="item-img-content">
       <%= image_tag @item.image, class: "item-box-img" if @item.image.attached? %>
 
-      <%# --- 売り切れ表示 --- %>
       <% if @item.order.present? %>
         <div class="sold-out">
           <span>Sold Out!!</span>
@@ -26,7 +25,6 @@
       </span>
     </div>
 
-    <%# --- 編集・削除ボタン --- %>
     <% if user_signed_in? && current_user == @item.user && @item.order.blank? %>
       <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
       <p class="or-text">or</p>
@@ -35,12 +33,10 @@
       <%= link_to "購入画面に進む", item_orders_path(@item), data: { turbo: false }, class: "item-red-btn" %>
     <% end %>
 
-    <%# --- 商品説明 --- %>
     <div class="item-explain-box">
       <span><%= @item.description %></span>
     </div>
 
-    <%# --- 商品詳細テーブル --- %>
     <table class="detail-table">
       <tbody>
         <tr>
@@ -70,7 +66,6 @@
       </tbody>
     </table>
 
-    <%# --- お気に入り / 通報 --- %>
     <div class="option">
       <div class="favorite-btn">
         <%= image_tag "star.png", class: "favorite-star-icon", width: "20", height: "20" %>
@@ -83,7 +78,6 @@
     </div>
   </div>
 
-  <%# --- コメント欄（ダミー） --- %>
   <div class="comment-box">
     <form>
       <textarea class="comment-text"></textarea>
@@ -99,7 +93,6 @@
     </form>
   </div>
 
-  <%# --- ナビゲーションリンク（ダミー） --- %>
   <div class="links">
     <a href="#" class="change-item-btn">＜ 前の商品</a>
     <a href="#" class="change-item-btn">後ろの商品 ＞</a>
