@@ -80,6 +80,8 @@ end
   gem 'i18n'
   gem 'active_hash'
   gem 'dotenv-rails'
+  gem 'payjp'
+
 
 
 

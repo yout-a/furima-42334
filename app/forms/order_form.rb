@@ -2,7 +2,7 @@ class OrderForm
   include ActiveModel::Model
   attr_accessor :user_id, :item_id,
                 :postal_code, :prefecture_id, :city, :address, :building, :phone_number,
-                :token
+                :token,:price
 
   with_options presence: true do
     validates :user_id
@@ -16,7 +16,7 @@ class OrderForm
   end
 
   def save
-    order = Order.create(user_id: user_id, item_id: item_id)
+    order = Order.create(user_id: user_id, item_id: item_id,price: price)
     Delivery.create(
       order_id: order.id,
       postal_code: postal_code,

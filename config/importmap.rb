@@ -17,3 +17,4 @@ pin "@rails/actioncable/src", to: "@rails--actioncable--src.js" # @8.0.200
 
 pin "item_price", to: "item_price.js"
 pin "@rails/ujs", to: "@rails--ujs.js" # @7.1.3
+pin "card", to: "card.js"
