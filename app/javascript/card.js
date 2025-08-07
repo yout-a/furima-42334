@@ -13,28 +13,20 @@ const pay = () => {
   cvcElement.mount("#cvc-form");
 
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
+    e.preventDefault(); 
+
     payjp.createToken(numberElement).then((response) => {
       if (response.error) {
+        form.submit(); 
         return;
       }
 
       const token = response.id;
-      const tokenInput = document.createElement("input");
-      tokenInput.setAttribute("type", "hidden");
-      tokenInput.setAttribute("name", "token");
-      tokenInput.setAttribute("value", token);
-      form.appendChild(tokenInput);
-
-      numberElement.clear();
-      expiryElement.clear();
-      cvcElement.clear();
+      document.getElementById("card-token").value = token;
 
       form.submit();
     });
   });
 };
 
-window.addEventListener("turbo:load", pay);
-document.addEventListener("turbo:render", pay);
+window.addEventListener("load", pay);

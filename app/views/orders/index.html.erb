@@ -37,6 +37,7 @@
         クレジットカード情報入力
       </h1>
       <div class="form-group">
+        <%= hidden_field_tag :token, nil, id: "card-token" %>
         <div class='form-text-wrap'>
           <label class="form-text">カード情報</label>
           <span class="indispensable">必須</span>
