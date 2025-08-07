@@ -36,13 +36,13 @@ RSpec.describe OrderForm, type: :model do
       it 'postal_codeが「3桁-4桁」の形式でないと購入できない（ハイフンなし）' do
         @order_form.postal_code = '1234567'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Postal code is invalid. Input in half-width like 123-4567")
+        expect(@order_form.errors.full_messages).to include('Postal code is invalid. Input in half-width like 123-4567')
       end
 
       it 'postal_codeが全角だと購入できない' do
         @order_form.postal_code = '１２３-４５６７'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Postal code is invalid. Input in half-width like 123-4567")
+        expect(@order_form.errors.full_messages).to include('Postal code is invalid. Input in half-width like 123-4567')
       end
 
       it 'prefecture_idが0だと購入できない' do
@@ -72,25 +72,25 @@ RSpec.describe OrderForm, type: :model do
       it 'phone_numberにハイフンが含まれていると購入できない' do
         @order_form.phone_number = '090-1234-5678'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens")
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens')
       end
 
       it 'phone_numberが9桁以下だと購入できない' do
         @order_form.phone_number = '090123456'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens")
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens')
       end
 
       it 'phone_numberが12桁以上だと購入できない' do
         @order_form.phone_number = '090123456789'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens")
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens')
       end
 
       it 'phone_numberが全角数字だと購入できない' do
         @order_form.phone_number = '０９０１２３４５６７８'
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens")
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid. Input 10 or 11 digit half-width numbers without hyphens')
       end
 
       it 'user_idが空だと購入できない' do

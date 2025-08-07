@@ -4,18 +4,14 @@ class OrdersController < ApplicationController
   before_action :redirect_if_invalid_access, only: [:index, :create]
   before_action :set_payjp_public_key, only: [:index, :create]
 
-  require "payjp"
+  require 'payjp'
 
   def index
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
 
-    unless user_signed_in?
-      return redirect_to root_path
-    end
+    return redirect_to root_path unless user_signed_in?
 
-    if current_user.id == @item.user_id || @item.order.present?
-      return redirect_to root_path
-    end
+    return redirect_to root_path if current_user.id == @item.user_id || @item.order.present?
 
     @order_form = OrderForm.new
   end
@@ -39,13 +35,13 @@ class OrdersController < ApplicationController
   end
 
   def redirect_if_invalid_access
-    if current_user.id == @item.user_id || @item.order.present?
-      redirect_to root_path
-    end
+    return unless current_user.id == @item.user_id || @item.order.present?
+
+    redirect_to root_path
   end
 
   def set_payjp_public_key
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
   end
 
   def order_params
@@ -59,7 +55,7 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: order_params[:token],
@@ -68,7 +64,6 @@ class OrdersController < ApplicationController
   end
 
   def set_gon_key
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
   end
 end
-

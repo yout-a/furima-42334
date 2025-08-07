@@ -52,9 +52,9 @@ class ItemsController < ApplicationController
   end
 
   def redirect_if_not_authorized_or_sold
-    if current_user != @item.user || @item.order.present?
-      redirect_to root_path
-    end
+    return unless current_user != @item.user || @item.order.present?
+
+    redirect_to root_path
   end
 
   def item_params

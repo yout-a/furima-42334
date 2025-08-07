@@ -5,7 +5,6 @@ class Item < ApplicationRecord
     order.present?
   end
 
-
   belongs_to :user
   has_one :order
 
