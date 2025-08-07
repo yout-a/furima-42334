@@ -20,10 +20,12 @@ class OrderForm
     validates :token
   end
 
-  validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
+  with_options numericality: { other_than: 0, message: "can't be blank" } do
+    validates :prefecture_id
+  end
 
   def save
-    order = Order.create(user_id: user_id, item_id: item_id, price: price)
+    order = Order.create(user_id: user_id, item_id: item_id)
     Delivery.create(
       order_id: order.id,
       postal_code: postal_code,
