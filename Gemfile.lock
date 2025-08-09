@@ -366,7 +366,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
-  aws-sdk-s3
+  aws-sdk-s3 (~> 1)
   bootsnap
   capybara
   debug

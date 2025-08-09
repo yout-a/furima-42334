@@ -82,7 +82,8 @@ end
   gem 'dotenv-rails'
   gem 'payjp'
   gem 'gon'
-  gem "aws-sdk-s3", require: false
+  gem "aws-sdk-s3", "~> 1"
+
 
 
 
