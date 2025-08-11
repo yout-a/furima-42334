@@ -37,3 +37,5 @@
 .DS_Store
 /vendor/bundle/
 *.Zone.Identifier
+spec/fixtures/files/sample1.pngZone.Identifier
+public/images/sample1.pngZone.Identifier
