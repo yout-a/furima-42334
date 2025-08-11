@@ -1,14 +1,13 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_if_not_authorized_or_sold, only: [:edit, :update]
-
-  def show
-  end
+  before_action :ensure_editable, only: [:edit, :update]
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
   end
+
+  def show; end
 
   def new
     @item = Item.new
@@ -17,16 +16,15 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user = current_user
-
     if @item.save
+
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @item.update(item_params)
@@ -51,10 +49,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def redirect_if_not_authorized_or_sold
-    return unless current_user != @item.user || @item.order.present?
-
-    redirect_to root_path
+  def ensure_editable
+    redirect_to root_path if current_user != @item.user || @item.order.present?
   end
 
   def item_params
