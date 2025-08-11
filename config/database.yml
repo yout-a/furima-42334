@@ -7,14 +7,27 @@ default: &default
   password: <%= ENV["DATABASE_PASSWORD"] %>
   host: localhost
   socket: /var/lib/mysql/mysql.sock
+
 development:
   <<: *default
   database: furima_42334_development
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
 
 test:
   <<: *default
   database: furima_42334_test
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
 
 production:
   <<: *default
+  adapter: mysql2
   database: furima_42334_production
+  username: root
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
