@@ -105,11 +105,9 @@ config.hosts = %w[
 ]
 
 config.hosts.clear
-config.hosts += [
-  "13.158.106.219",
-  "127.0.0.1",
-  "localhost",
-  "furima-42334.onrender.com"
-]
+config.hosts << "furima-42334.onrender.com"
+config.hosts << "13.158.106.219"
+config.hosts << "127.0.0.1"
+config.hosts << "localhost"
 
 end
