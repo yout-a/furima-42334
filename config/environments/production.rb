@@ -97,12 +97,6 @@ Rails.application.configure do
   config.action_controller.default_url_options = { host: 'furima-42334.onrender.com', protocol: 'https' }
   
   # config/environments/production.rb
-config.hosts = %w[
-  localhost
-  13.158.106.219
-  127.0.0.1
-  furima-42334.onrender.com
-]
 
 config.hosts.clear
 config.hosts << "furima-42334.onrender.com"
