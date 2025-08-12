@@ -96,11 +96,12 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   config.action_controller.default_url_options = { host: 'furima-42334.onrender.com', protocol: 'https' }
   
-  config.hosts = %w[
-    furima-42334.onrender.com \
-    13.158.106.219 \
-    127.0.0.1 \
-    localhost
-  ]
+  # config/environments/production.rb
+config.hosts = %w[
+  furima-42334.onrender.com
+  13.158.106.219
+  127.0.0.1
+  localhost
+]
 
 end
