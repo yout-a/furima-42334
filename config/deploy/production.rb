@@ -60,4 +60,11 @@
 #     # password: "please use keys"
 #   }
 
-server '13.158.106.219', user: 'ec2-user', roles: %w{app db web}
+server '13.158.106.219',
+  user: 'ubuntu',
+  roles: %w{app db web},
+  ssh_options: {
+    keys: %w(/home/koba/.ssh/my-key-pair.pem), 
+    forward_agent: true,
+    auth_methods: %w(publickey)
+  }
