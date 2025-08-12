@@ -49,7 +49,7 @@ Rails.application.configure do
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
@@ -94,8 +94,13 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.action_controller.default_url_options = { host: "https://furima-42334.onrender.com" }
+  config.action_controller.default_url_options = { host: 'furima-42334.onrender.com', protocol: 'https' }
   
-  config.hosts << "furima-42334.onrender.com"
+  config.hosts = %w[
+    furima-42334.onrender.com
+    13.158.106.219
+    127.0.0.1
+    localhost
+  ]
 
 end
