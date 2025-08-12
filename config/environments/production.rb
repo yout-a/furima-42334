@@ -98,10 +98,10 @@ Rails.application.configure do
   
   # config/environments/production.rb
 config.hosts = %w[
-  furima-42334.onrender.com
+  localhost
   13.158.106.219
   127.0.0.1
-  localhost
+  furima-42334.onrender.com
 ]
 
 end
