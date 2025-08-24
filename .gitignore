@@ -39,3 +39,5 @@
 *.Zone.Identifier
 spec/fixtures/files/sample1.pngZone.Identifier
 public/images/sample1.pngZone.Identifier
+
+/config/master.key
