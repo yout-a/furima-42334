@@ -60,11 +60,9 @@
 #     # password: "please use keys"
 #   }
 
-server '13.158.106.219',
-  user: 'ubuntu',
-  roles: %w{app db web},
-  ssh_options: {
-    keys: %w(/home/koba/.ssh/my-key-pair.pem), 
-    forward_agent: true,
-    auth_methods: %w(publickey)
-  }
+server '13.158.106.219', user: 'ubuntu', roles: %w[app db web]
+set :ssh_options, {
+  keys: %w(~/.ssh/my-key-pair.pem),
+  forward_agent: true,
+  auth_methods: %w(publickey)
+}

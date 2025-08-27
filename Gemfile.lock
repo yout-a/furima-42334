@@ -375,11 +375,11 @@ DEPENDENCIES
   active_hash
   aws-sdk-s3 (~> 1)
   bootsnap
-  capistrano
-  capistrano-bundler
-  capistrano-rails
-  capistrano-rbenv
-  capistrano3-unicorn
+  capistrano (~> 3.18)
+  capistrano-bundler (~> 2.1)
+  capistrano-rails (~> 1.6)
+  capistrano-rbenv (~> 2.2)
+  capistrano3-unicorn (~> 0.2)
   capybara
   debug
   devise
