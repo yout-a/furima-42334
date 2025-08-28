@@ -1,23 +1,22 @@
+# config/unicorn.rb
 app_path = "/var/www/furima-42334"
 
 worker_processes 2
-
 working_directory "#{app_path}/current"
 
-listen "#{shared_path}/tmp/sockets/unicorn.sock"
-
-pid         "#{app_path}/shared/tmp/pids/unicorn.pid"
-stderr_path "#{app_path}/shared/log/unicorn.stderr.log"
-stdout_path "#{app_path}/shared/log/unicorn.stdout.log"
+listen "/var/www/furima-42334/shared/tmp/sockets/unicorn.sock"
+pid         "/var/www/furima-42334/shared/tmp/pids/unicorn.pid"
+stderr_path "/var/www/furima-42334/shared/log/unicorn.stderr.log"
+stdout_path "/var/www/furima-42334/shared/log/unicorn.stdout.log"
 
 timeout 60
 preload_app true
 check_client_connection false
 
 before_fork do |_server, _worker|
-  defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
+  ActiveRecord::Base.connection.disconnect! if defined?(ActiveRecord::Base)
 end
 
 after_fork do |_server, _worker|
-  defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
 end
