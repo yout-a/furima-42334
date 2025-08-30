@@ -1,0 +1,162 @@
+<%= form_with model: item, local: true, html: { multipart: true } do |f| %>
+  <%= render 'shared/error_messages', model: f.object %>
+
+  <div class="img-upload">
+  <div class="weight-bold-text">
+    商品画像 <span class="indispensable">必須</span>
+  </div>
+
+  <% if @item.images.attached? %>
+    <div class="existing-images">
+      <% @item.images.each do |att| %>
+        <% next unless att.blob&.persisted? && att.blob.image? && att.variable? %>
+
+        <div class="existing-image" id="att-<%= att.id %>" data-attachment-id="<%= att.id %>">
+          <div class="thumb">
+            <%= image_tag att.variant(resize_to_fill: [180, 180]) %>
+          </div>
+
+          <div class="actions">
+            <div class="replace">
+              <span>この画像を置き換える</span>
+              <%= file_field_tag "item[replace_images][#{att.id}]", accept: "image/*" %>
+            </div>
+
+            <%= link_to '削除',
+                  item_image_path(@item, attachment_id: att.id),
+                  data: { turbo_method: :delete, turbo_confirm: 'この画像を削除しますか？' },
+                  class: 'btn btn-danger btn-sm w-100' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- プレビュー置き場は 1個だけ -->
+  <div id="previews" class="upload-previews"></div>
+
+  <% max   = Item::MAX_IMAGES %>
+  <% count = @item.images.attachments.size %>
+
+  <div class="click-upload"
+       id="js-upload-area"
+       data-max="<%= max %>"
+       data-existing="<%= count %>">
+    <p class="note">クリックしてファイルをアップロード（あと <%= max - count %> 枚）</p>
+  </div>
+
+  <% if max - count <= 0 %>
+    <p class="note">画像は最大 <%= max %> 枚です。新しい画像を追加するには「置き換え」または「削除」をご利用ください。</p>
+  <% end %>
+</div>
+
+  <div class="new-items">
+    <div class="weight-bold-text">
+      商品名
+      <span class="indispensable">必須</span>
+    </div>
+    <%= f.text_area :title, class:"items-text", id:"item-name",
+                    placeholder:"商品名（必須 40文字まで)", maxlength:"40" %>
+
+    <div class="items-explain">
+      <div class="weight-bold-text">
+        商品の説明
+        <span class="indispensable">必須</span>
+      </div>
+      <%= f.text_area :description, class:"items-text", id:"item-info",
+                      placeholder:"商品の説明（必須 1,000文字まで）（色、素材、重さ、定価、注意点など）例）2010年頃に1万円で購入したジャケットです。ライトグレーで傷はありません。あわせやすいのでおすすめです。",
+                      rows:"7", maxlength:"1000" %>
+    </div>
+  </div>
+
+  <div class="items-detail">
+    <div class="weight-bold-text">商品の詳細</div>
+    <div class="form">
+      <div class="weight-bold-text">
+        カテゴリー
+        <span class="indispensable">必須</span>
+      </div>
+      <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"select-box"}) %>
+
+      <div class="weight-bold-text">
+        商品の状態
+        <span class="indispensable">必須</span>
+      </div>
+      <%= f.collection_select(:condition_id, Condition.all, :id, :name, {}, {class:"select-box"}) %>
+    </div>
+  </div>
+
+  <div class="items-detail">
+    <div class="weight-bold-text question-text">
+      <span>配送について</span>
+      <a class="question" href="#">?</a>
+    </div>
+    <div class="form">
+      <div class="weight-bold-text">
+        配送料の負担
+        <span class="indispensable">必須</span>
+      </div>
+      <%= f.collection_select(:shipping_fee_bearer_id, ShippingFeeBearer.all, :id, :name, {}, {class:"select-box", id:"item-shipping-fee-bearer"}) %>
+
+      <div class="weight-bold-text">
+        発送元の地域
+        <span class="indispensable">必須</span>
+      </div>
+      <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {}, { class: "select-box", id: "item-prefecture" }) %>
+
+      <div class="weight-bold-text">
+        発送までの日数
+        <span class="indispensable">必須</span>
+      </div>
+      <%= f.collection_select(:shipping_day_id, ShippingDay.all, :id, :name, {}, {class:"select-box", id:"item-shipping-day"}) %>
+    </div>
+  </div>
+
+  <div class="sell-price">
+    <div class="weight-bold-text question-text">
+      <span>販売価格<br>(¥300〜9,999,999)</span>
+      <a class="question" href="#">?</a>
+    </div>
+
+    <div>
+      <div class="price-content">
+        <div class="price-text">
+          <span>価格</span>
+          <span class="indispensable">必須</span>
+        </div>
+        <span class="sell-yen">¥</span>
+        <%= f.text_field :price, class:"price-input", id:"item-price", placeholder:"例）300" %>
+      </div>
+
+      <div class="price-content">
+        <span>販売手数料 (10%)</span>
+        <span><span id='add-tax-price'></span>円</span>
+      </div>
+
+      <div class="price-content">
+        <span>販売利益</span>
+        <span><span id='profit'></span>円</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="caution">
+    <p class="sentence">
+      <a href="#">禁止されている出品、</a>
+      <a href="#">行為</a>
+      を必ずご確認ください。
+    </p>
+    <p class="sentence">
+      またブランド品でシリアルナンバー等がある場合はご記載ください。
+      <a href="#">偽ブランドの販売</a> は犯罪であり処罰される可能性があります。
+    </p>
+    <p class="sentence">
+      また、出品をもちまして <a href="#">加盟店規約</a> に同意したことになります。
+    </p>
+  </div>
+
+  <div class="sell-btn-contents">
+    <%= f.submit "出品する", class: "sell-btn" %>
+    <%= link_to 'もどる', items_path, class:"back-btn" %>
+  </div>
+<% end %>

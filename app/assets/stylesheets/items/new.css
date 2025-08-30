@@ -199,6 +199,31 @@
   text-decoration: none;
 }
 
+/* 出品ボタンの見た目とカーソル */
+.sell-btn,
+input[type="submit"].sell-btn {
+  cursor: pointer;            /* マウスオーバーで手の形に */
+  transition: opacity .2s, transform .02s;
+}
+
+.sell-btn:hover {
+  opacity: .9;               
+}
+
+.sell-btn:active {
+  transform: translateY(1px); 
+}
+
+.sell-btn:disabled {
+  cursor: not-allowed;     
+  opacity: .5;
+}
+
+button,
+.btn {
+  cursor: pointer;
+}
+
 /* /下部ボタン */
 
 .items-sell-footer {

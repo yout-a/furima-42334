@@ -1,0 +1,170 @@
+/* プレビュー置き場を横並びに */
+#previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 1枚ぶんの枠（正方形で統一） */
+#previews .preview {
+  width: 120px;        /* ←サイズはお好みで */
+  height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;     /* はみ出した分をカット */
+  background: #fff;
+  display: grid;
+  place-items: center;
+}
+
+/* 画像の入れ方を指定 */
+#previews .preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* ぴったり正方形に“トリミング”して揃える */
+  /* ← トリミングせず余白で揃えたいなら↓に変更
+     object-fit: contain; background: #f5f5f5; */
+}
+
+.upload-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+.preview-thumb {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+#new-images-input { display: inline-block; }
+
+/* 既存画像コンテナ（横並び＋折り返し） */
+.existing-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* 各カード */
+.existing-image {
+  width: 240px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- サムネイル --- */
+/* .thumb を置いている場合と置いていない場合の両方に対応 */
+.existing-image .thumb { margin-bottom: 8px; }
+.existing-image .thumb img,
+.existing-image > img {
+  width: 140px;              /* サムネサイズ（お好みで） */
+  height: 140px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f5f5f5;
+}
+
+/* 置き換え/削除ブロック */
+.existing-image .actions {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;  /* 縦に積む */
+  gap: 8px;                /* 各要素の間隔 */
+}
+
+/* 「この画像を置き換える」行 */
+.existing-image .actions .replace {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ファイル input をカード幅に合わせ、"選択されていません" を非表示にして
+   ボタンだけ見せる（ブラウザ差は ::file-selector-button で調整） */
+.existing-image .actions .replace input[type="file"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 0; /* ← これで右側の「選択されていません」を隠す */
+}
+
+/* ボタン部分の見た目（モダンブラウザ） */
+.existing-image .actions .replace input[type="file"]::file-selector-button {
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+.existing-image .actions .replace input[type="file"]::file-selector-button:hover {
+  background: #f0f0f0;
+}
+
+/* 旧 Edge/一部 WebKit 向け */
+.existing-image .actions .replace input[type="file"]::-webkit-file-upload-button {
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+.existing-image .actions .replace input[type="file"]::-webkit-file-upload-button:hover {
+  background: #f0f0f0;
+}
+
+/* --- 削除ボタン（button_to 用） --- */
+/* button_to は <form class="button_to"> を吐くため横幅を合わせる */
+.existing-image form.button_to { width: 100%; }
+
+/* 実際のボタン */
+.existing-image .delete-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 8px 0;
+  background: #fff2f2;
+  border: 1px solid #f2c0c0;
+  color: #c00;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+}
+.existing-image .delete-btn:hover { background: #ffe7e7; }
+
+/* スマホ等でさらに窮屈ならサムネを少し小さくして対応 */
+@media (max-width: 480px) {
+  .existing-image { width: 200px; }
+  .existing-image .thumb img,
+  .existing-image > img { width: 120px; height: 120px; }
+}
+
+/* 画像の新規プレビュー（削除ボタン付き） */
+.upload-previews .preview {
+  position: relative;
+  display: inline-block;
+  margin: 8px;
+}
+.upload-previews .preview img.preview-image {
+  width: 180px; height: 180px; object-fit: cover;
+  border-radius: 6px; border: 1px solid #ddd; background:#f5f5f5;
+}
+/* 削除ボタンを右上に重ねる */
+.upload-previews .preview .preview-actions .remove-new {
+  position: absolute; right: 6px; top: 6px;
+  padding: 3px 8px; font-size: 12px; line-height: 1;
+}
+/* アップロード領域を一時的に隠す（選択直後） */
+/* .click-upload.is-collapsed { display: none; } */

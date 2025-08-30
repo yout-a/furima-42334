@@ -14,12 +14,17 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :shipping_day
 
-  has_one_attached :image
+  MAX_IMAGES = 5
+
+  has_many_attached :images
+  validates :images,
+    attached: true,
+    content_type: %w[image/png image/jpeg],
+    limit: { min: 1, max: MAX_IMAGES }
 
   with_options presence: true do
     validates :title
     validates :description
-    validates :image
     validates :price
     validates :category_id
     validates :condition_id
@@ -35,3 +40,5 @@ class Item < ApplicationRecord
   validates :prefecture_id, numericality: { other_than: 1, message: 'を選択してください' }
   validates :shipping_day_id, numericality: { other_than: 1, message: 'を選択してください' }
 end
+
+

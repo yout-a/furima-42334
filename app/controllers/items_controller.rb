@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_editable, only: [:edit, :update]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :destroy_image]
+  before_action :ensure_editable, only: [:edit, :update, :destroy, :destroy_image]
 
   def index
-    @items = Item.includes(:user).order(created_at: :desc)
+    @items = Item.includes(images_attachments: :blob).order(created_at: :desc)
   end
 
   def show; end
@@ -27,36 +27,83 @@ class ItemsController < ApplicationController
   def edit; end
 
   def update
-    if @item.update(item_params)
-      redirect_to item_path(@item)
-    else
-      render :edit, status: :unprocessable_entity
+  @item.assign_attributes(item_params_without_images)
+
+  before = @item.images.attachments.to_a   # 既存を記録
+
+  # 置き換え
+  if params.dig(:item, :replace_images).present?
+    params[:item][:replace_images].each do |att_id, uploaded|
+      next if uploaded.blank?
+      if (old = @item.images.attachments.find_by(id: att_id))
+        old.purge
+      end
+      @item.images.attach(uploaded)
     end
   end
 
-  def destroy
-    if @item.user == current_user
-      @item.destroy
-      redirect_to root_path, notice: '商品を削除しました'
-    else
-      redirect_to root_path, alert: '削除する権限がありません'
+  # 個別削除
+  if params[:item][:remove_image_ids].present?
+    @item.images.attachments.where(id: params[:item][:remove_image_ids]).each(&:purge)
+  end
+
+  # 追加
+  @item.images.attach(params[:item][:images]) if params.dig(:item, :images).present?
+
+  if @item.save
+    redirect_to @item, notice: "商品を更新しました。"
+  else
+    # 失敗時：今回追加された分だけ戻す（次の描画で“6枚”などにならない）
+    newly = @item.images.attachments - before
+    newly.each(&:purge)
+
+    @item.images_attachments.reload
+    render :edit, status: :unprocessable_entity
+  end
+end
+
+def destroy
+    @item.destroy
+    redirect_to root_path, notice: '商品を削除しました'
+  end
+
+  def destroy_image
+    attachment = @item.images.attachments.find(params[:attachment_id])
+    id = attachment.id
+    attachment.purge
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("att-#{id}") }
+      format.html { redirect_to edit_item_path(@item), notice: '画像を削除しました。' }
+      format.json { head :no_content }
     end
   end
 
   private
 
+  # destroy_image のルートは :item_id を使うので両方見ておく
   def set_item
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:id] || params[:item_id])
   end
 
   def ensure_editable
-    redirect_to root_path if current_user != @item.user || @item.order.present?
-  end
-
-  def item_params
-    params.require(:item).permit(
-      :image, :title, :description, :category_id, :condition_id,
-      :shipping_fee_bearer_id, :prefecture_id, :shipping_day_id, :price
-    )
+    redirect_to root_path, alert: '削除する権限がありません' unless @item.user == current_user
   end
 end
+
+  def item_params
+  params.require(:item).permit(
+    :title, :description, :price,
+    :category_id, :condition_id, :shipping_fee_bearer_id,
+    :prefecture_id, :shipping_day_id,
+    { images: [] }
+    )
+  end
+
+  def item_params_without_images
+  params.require(:item).permit(
+    :title, :description, :price,
+    :category_id, :condition_id, :shipping_fee_bearer_id,
+    :prefecture_id, :shipping_day_id
+    )
+  end

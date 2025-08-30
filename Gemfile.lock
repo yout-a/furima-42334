@@ -52,6 +52,12 @@ GEM
       rails-html-sanitizer (~> 1.6)
     active_hash (4.0.0)
       activesupport (>= 6.1.0)
+    active_storage_validations (3.0.1)
+      activejob (>= 6.1.4)
+      activemodel (>= 6.1.4)
+      activestorage (>= 6.1.4)
+      activesupport (>= 6.1.4)
+      marcel (>= 1.0.3)
     activejob (7.1.5.1)
       activesupport (= 7.1.5.1)
       globalid (>= 0.3.6)
@@ -163,6 +169,8 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
+    ffi (1.17.2)
+    ffi (1.17.2-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     gon (6.4.0)
@@ -175,6 +183,9 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
     importmap-rails (2.2.2)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -204,6 +215,8 @@ GEM
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2025.0805)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
@@ -320,6 +333,9 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.4)
+    ruby-vips (2.2.5)
+      ffi (~> 1.12)
+      logger
     rubyzip (2.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.34.0)
@@ -373,6 +389,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
+  active_storage_validations
   aws-sdk-s3 (~> 1)
   bootsnap
   capistrano (~> 3.18)
@@ -388,6 +405,7 @@ DEPENDENCIES
   faker
   gon
   i18n
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   mysql2 (~> 0.5.6)
