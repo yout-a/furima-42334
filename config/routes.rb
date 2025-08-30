@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :items do
   resources :orders, only: [:index, :create]
+  delete "images/:attachment_id", to: "items#destroy_image", as: :image
 end
 end
 

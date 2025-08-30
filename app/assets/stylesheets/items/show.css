@@ -205,3 +205,23 @@
   font-weight: bold;
   font-size: 23px;
 }
+
+/* /複数枚画像の設定 */
+.main-image {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.other-images {
+  display: flex;
+  gap: 10px;
+}
+
+.sub-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}

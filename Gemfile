@@ -80,7 +80,8 @@ end
   gem 'payjp'
   gem 'gon'
   gem "aws-sdk-s3", "~> 1"
-  
+  gem 'active_storage_validations'
+  gem "image_processing", "~> 1.2"
 
 
 

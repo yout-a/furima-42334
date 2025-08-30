@@ -7,18 +7,31 @@
     </h2>
 
     <div class="item-img-content">
-      <%= image_tag @item.image, class: "item-box-img" if @item.image.attached? %>
+    <% if @item.images.attached? %>
+    <!-- メイン画像（先頭） -->
+    <%= image_tag @item.images.first, class: "item-box-img main-image" %>
 
-      <% if @item.order.present? %>
-        <div class="sold-out">
-          <span>Sold Out!!</span>
-        </div>
+    <!-- サムネ一覧（2枚目以降） -->
+    <div class="other-images">
+      <% @item.images.drop(1).each do |img| %>
+        <%= image_tag img, class: "sub-image" %>
       <% end %>
     </div>
+    <% else %>
+      <!-- 画像が無いときのダミー -->
+      <%= image_tag "item-sample.png", class: "item-box-img" %>
+    <% end %>
 
-    <div class="item-price-box">
-      <span class="item-price">
-        ¥ <%= number_with_delimiter(@item.price) %>
+    <% if @item.order.present? %>
+      <div class="sold-out">
+        <span>Sold Out!!</span>
+      </div>
+    <% end %>
+    </div>
+
+  <div class="item-price-box">
+    <span class="item-price">
+      ¥ <%= number_with_delimiter(@item.price) %>
       </span>
       <span class="item-postage">
         <%= @item.shipping_fee_bearer.name %>
