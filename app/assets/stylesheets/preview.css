@@ -167,4 +167,4 @@
   padding: 3px 8px; font-size: 12px; line-height: 1;
 }
 /* アップロード領域を一時的に隠す（選択直後） */
-.click-upload.is-collapsed { display: none; }
+/* .click-upload.is-collapsed { display: none; } */

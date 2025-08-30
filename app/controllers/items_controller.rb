@@ -62,22 +62,18 @@ class ItemsController < ApplicationController
   end
 end
 
-
-  def destroy
-    if @item.user == current_user
-      @item.destroy
-      redirect_to root_path, notice: '商品を削除しました'
-    else
-      redirect_to root_path, alert: '削除する権限がありません'
-    end
+def destroy
+    @item.destroy
+    redirect_to root_path, notice: '商品を削除しました'
   end
 
   def destroy_image
     attachment = @item.images.attachments.find(params[:attachment_id])
+    id = attachment.id
     attachment.purge
 
     respond_to do |format|
-      format.turbo_stream # Turbo(Hotwire)でカードをその場で消す
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("att-#{id}") }
       format.html { redirect_to edit_item_path(@item), notice: '画像を削除しました。' }
       format.json { head :no_content }
     end
@@ -85,13 +81,15 @@ end
 
   private
 
+  # destroy_image のルートは :item_id を使うので両方見ておく
   def set_item
-     @item = Item.find(params[:id] || params[:item_id])
+    @item = Item.find(params[:id] || params[:item_id])
   end
 
   def ensure_editable
-    redirect_to root_path, alert: '権限がありません' and return unless @item.user == current_user && !@item.order.present?
+    redirect_to root_path, alert: '削除する権限がありません' unless @item.user == current_user
   end
+end
 
   def item_params
   params.require(:item).permit(
@@ -109,4 +107,3 @@ end
     :prefecture_id, :shipping_day_id
     )
   end
-end

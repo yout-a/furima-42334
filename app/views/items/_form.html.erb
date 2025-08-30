@@ -23,7 +23,7 @@
             </div>
 
             <%= link_to '削除',
-                  item_image_path(@item, att),
+                  item_image_path(@item, attachment_id: att.id),
                   data: { turbo_method: :delete, turbo_confirm: 'この画像を削除しますか？' },
                   class: 'btn btn-danger btn-sm w-100' %>
           </div>
