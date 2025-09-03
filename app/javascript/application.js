@@ -4,6 +4,4 @@ Rails.start()
 import "@hotwired/turbo-rails"
 import "item_price"
 import "card"
-import "preview"
-import "limit_images";
-import "new_preview";
+import "./uploader"

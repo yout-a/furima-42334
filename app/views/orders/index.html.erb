@@ -7,7 +7,19 @@
     </h1>
 
     <div class='buy-item-info'>
-      <%= image_tag @item.image, class: 'buy-item-img' if @item.image.attached? %>
+      <% if @item.images.attached? %>
+        <div class="buy-item-thumbs">
+          <% @item.images.each do |img| %>
+            <%= image_tag(
+                  img.variable? ? img.variant(resize_to_fill: [140, 140]) : img,
+                  class: 'buy-item-img'
+                ) %>
+          <% end %>
+        </div>
+      <% else %>
+        <%= image_tag 'item-sample.png', class: 'buy-item-img' %>
+      <% end %>
+
       <div class='buy-item-right-content'>
         <h2 class='buy-item-text'>
           <%= @item.title %>
