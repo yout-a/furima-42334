@@ -13,7 +13,7 @@
 
         <div class="existing-image" id="att-<%= att.id %>" data-attachment-id="<%= att.id %>">
           <div class="thumb">
-            <%= image_tag att.variant(resize_to_fill: [180, 180]) %>
+            <%= image_tag att.variant(resize_to_fill: [180, 180]), class: "preview-image" %>
           </div>
 
           <div class="actions">
@@ -22,15 +22,17 @@
               <%= file_field_tag "item[replace_images][#{att.id}]", accept: "image/*" %>
             </div>
 
-            <%= link_to '削除',
-                  item_image_path(@item, attachment_id: att.id),
-                  data: { turbo_method: :delete, turbo_confirm: 'この画像を削除しますか？' },
-                  class: 'btn btn-danger btn-sm w-100' %>
+            <label class="remove-label">
+              <%= check_box_tag 'item[remove_image_ids][]', att.id, false,
+                    class: 'js-remove-existing' %>
+              削除
+            </label>
           </div>
         </div>
       <% end %>
     </div>
   <% end %>
+
 
   <!-- プレビュー置き場は 1個だけ -->
   <div id="previews" class="upload-previews"></div>

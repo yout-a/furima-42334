@@ -11,7 +11,7 @@
         <div class="buy-item-thumbs">
           <% @item.images.each do |img| %>
             <%= image_tag(
-                  img.variable? ? img.variant(resize_to_fill: [180, 180]) : img,
+                  img.variable? ? img.variant(resize_to_fill: [140, 140]) : img,
                   class: 'buy-item-img'
                 ) %>
           <% end %>

@@ -17,7 +17,6 @@
 
     // 設定
     const MAX_FILES = Number(area.dataset.max || 5);
-    const EXISTING  = Number(area.dataset.existing || 0);
 
     // 既存画像の削除チェック（編集画面にのみ存在）
     const deleteCbs = Array.from(
@@ -79,6 +78,13 @@
           updateUI();
           setTimeout(() => { area.style.pointerEvents = ""; }, 80);
         });
+
+        // 既存削除チェックの変化にも追従（編集画面のみ）
+        deleteCbs.forEach(cb => cb.addEventListener("change", (e) => {
+          const tile = e.target.closest(".existing-image");
+          if (tile) tile.classList.toggle("is-removed", e.target.checked); // 見た目
+          updateUI();                                                      // 枚数再計算
+        }));
       });
 
       actions.appendChild(rm);
@@ -114,10 +120,12 @@
     };
 
     // ----- 枚数計算（ここだけを真実にする） -----
-    const selectedNew = () => selectedBin.querySelectorAll("[data-uid]").length;
-    const checkedDeletes = () => deleteCbs.filter(cb => cb.checked).length;
-    const used = () => (EXISTING - checkedDeletes()) + selectedNew();
-    const left = () => Math.max(0, MAX_FILES - used());
+      const selectedNew    = () => selectedBin.querySelectorAll("[data-uid]").length;
+      const checkedDeletes = () => deleteCbs.filter(cb => cb.checked).length;
+      const existingNow    = () => form.querySelectorAll(".existing-images .existing-image").length;
+      const used           = () => (existingNow() - checkedDeletes()) + selectedNew();
+      const left           = () => Math.max(0, MAX_FILES - used());
+
 
     // UI更新：残り枚数・追加用inputの管理
     const updateUI = () => {

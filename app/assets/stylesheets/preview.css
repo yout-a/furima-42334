@@ -150,6 +150,18 @@
   .existing-image > img { width: 120px; height: 120px; }
 }
 
+.existing-image.is-removed {
+  opacity: .45;
+  position: relative;
+}
+.existing-image.is-removed::after {
+  content: "削除予定";
+  position: absolute;
+  top: 8px; left: 8px;
+  background: #000; color: #fff;
+  font-size: 12px; padding: 2px 6px; border-radius: 4px;
+}
+
 /* 画像の新規プレビュー（削除ボタン付き） */
 .upload-previews .preview {
   position: relative;
@@ -166,5 +178,42 @@
   padding: 3px 8px; font-size: 12px; line-height: 1;
 }
 
-.buy-item-thumbs { display: flex; gap: 8px; }
-.buy-item-thumbs .buy-item-img { width:180px; height:180px; object-fit:cover;       border-radius:8px; }
+/* 画像＋右側情報の2カラム */
+.buy-item-info {
+  display: grid;
+  grid-template-columns: 1fr 280px; /* 左=画像群, 右=情報 */
+  gap: 24px;
+  align-items: start;
+}
+
+/* サムネ一覧（折り返し＆余白） */
+.buy-item-thumbs {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;
+  scroll-snap-type: x proximity; /* 任意 */
+}
+.buy-item-img { 
+  scroll-snap-align: start; 
+}
+
+/* 右側のテキスト領域が食い込まないように */
+.buy-item-right-content {
+  min-width: 0;             /* 折り返し許可 */
+  word-break: break-word;
+}
+
+/* モバイル時は1カラムに */
+@media (max-width: 768px) {
+  .buy-item-info {
+    grid-template-columns: 1fr;
+  }
+  .buy-item-img {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+
