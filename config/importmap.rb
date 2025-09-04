@@ -18,7 +18,4 @@ pin "@rails/actioncable/src", to: "@rails--actioncable--src.js" # @8.0.200
 pin "item_price", to: "item_price.js"
 pin "@rails/ujs", to: "@rails--ujs.js" # @7.1.3
 pin "card", to: "card.js"
-# * プレビュー機能
-pin "preview", to: "preview.js"
-pin "new_preview", to: "new_preview.js"
-pin "limit_images", to: "limit_images.js"
+pin "uploader", to: "uploader.js"
