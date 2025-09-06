@@ -104,5 +104,8 @@ config.hosts << "13.158.106.219"
 config.hosts << "127.0.0.1"
 config.hosts << "localhost"
 
+ config.importmap = ActiveSupport::OrderedOptions.new unless config.respond_to?(:importmap)
+  config.importmap.enabled = true
+
 end
 
