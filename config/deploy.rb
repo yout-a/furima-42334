@@ -19,6 +19,26 @@ set :unicorn_pid,         "#{shared_path}/tmp/pids/unicorn.pid"
 set :unicorn_config_path, "#{shared_path}/config/unicorn.rb"
 set :unicorn_rack_env,    'production'
 
+after 'deploy:publishing', 'unicorn:restart'
 
-after "deploy:published", "unicorn:restart"
+namespace :deploy do
+  # 古いリリースを自動削除
+  after :finishing, 'deploy:cleanup'
+
+  # アセット掃除
+  desc 'Clean old compiled assets'
+  task :clean_assets do
+    on roles(:web) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, 'exec rails assets:clean'
+        end
+      end
+    end
+  end
+end
+
+# precompile の後に assets:clean を実行
+after 'deploy:assets:precompile', 'deploy:clean_assets'
+
 
